@@ -33,6 +33,10 @@ public class UserSubscription {
             return false;
         }
     }
+    public boolean hasSubscription(){
+        if(subscriptions.isEmpty()) return false;
+        else return true;
+    }
 //    public void printSubscriptions() {
 //        if (subscriptions == null || subscriptions.isEmpty()) {
 //            System.out.println("No subscriptions added.");

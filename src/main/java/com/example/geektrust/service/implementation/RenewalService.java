@@ -5,21 +5,18 @@ import com.example.geektrust.entities.UserSubscription;
 import com.example.geektrust.entities.enums.Category;
 import com.example.geektrust.exceptions.SubscriptionNotFoundException;
 import com.example.geektrust.globals.Constants;
-import com.example.geektrust.repository.ISubscriptionPlanRepository;
-import com.example.geektrust.repository.ITopUpRepository;
 import com.example.geektrust.repository.IUserSubscriptionRepository;
 import com.example.geektrust.service.IRenewalService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RenewalService implements IRenewalService {
 
 
-    private DateTimeFormatter formatter;
-    private IUserSubscriptionRepository userSubscriptionRepository;
+    private final DateTimeFormatter formatter;
+    private final IUserSubscriptionRepository userSubscriptionRepository;
 
     public RenewalService(IUserSubscriptionRepository userSubscriptionRepository){
         this.userSubscriptionRepository=userSubscriptionRepository;
@@ -29,7 +26,7 @@ public class RenewalService implements IRenewalService {
     @Override
     public void printRenewalDetails() {
         UserSubscription userSubscription = userSubscriptionRepository.getUserSubscription();
-        if(userSubscription==null){
+        if(userSubscription==null || !userSubscription.hasSubscription()){
             throw new SubscriptionNotFoundException("SUBSCRIPTIONS_NOT_FOUND");
         }
         Map<Category, SubscriptionPlan> subscriptions = userSubscription.getSubscriptions();
