@@ -1,0 +1,47 @@
+# Gradle build output
+/build/
+*/build/
+*.class
+
+# Gradle working files
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/
+gradle/wrapper/gradle-wrapper.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+
+# Backup files
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+
+# JAR/WAR/EAR outputs (optional; remove if you want to commit)
+*.jar
+*.war
+*.ear
