@@ -1,47 +1,73 @@
-# Gradle build output
-/build/
-*/build/
-*.class
 
-# Gradle working files
 .gradle/
+build/
+out/
 !gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/
-gradle/wrapper/gradle-wrapper.properties
+gradle-app.setting
 
-# IntelliJ IDEA
+# Gradle Wrapper logs
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.jar.tmp
+
+# === IntelliJ IDEA ===
 .idea/
 *.iml
-out/
+*.ipr
+*.iws
 
-# Eclipse
+# IntelliJ build dirs
+/out/
+
+# === Eclipse ===
 .project
 .classpath
 .settings/
+bin/
 
-# VS Code
+# === VS Code ===
 .vscode/
 
-# Logs
+# === Logs ===
 *.log
 
-# OS Files
+# === Operating System Files ===
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Java
-*.class
-
-# Backup files
-*.swp
-*.swo
+# Linux
 *~
 
-# Temporary files
-tmp/
-temp/
-
-# JAR/WAR/EAR outputs (optional; remove if you want to commit)
+# === Java ===
+*.class
 *.jar
 *.war
 *.ear
+*.javadoc
+
+# === Temporary files ===
+*.tmp
+*.swp
+*.swo
+
+# === Geektrust Input/Output Files ===
+# (Optional: uncomment if you don’t want to commit sample inputs)
+# input.txt
+# output.txt
+
+# === Configuration ===
+.env
+*.config
+
+# === Test Reports ===
+/test-results/
+/reports/
+
+# === Other Tools ===
+/coverage/
