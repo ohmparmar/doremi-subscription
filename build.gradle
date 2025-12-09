@@ -1,10 +1,9 @@
 plugins {
     id 'java'
     id 'jacoco'
-    id 'application'
 }
 
-group = 'com.geektrust'
+group = 'com.example'
 version = '1.0'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -23,9 +22,6 @@ jacocoTestReport { //Please do not change this
     }
 }
 
-application {
-    mainClassName = 'com.geektrust.backend.Main'
-}
 
 jar {
     archiveBaseName = 'geektrust' //Please do not change this final artifact name
@@ -43,19 +39,6 @@ jar {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
-    testCompileOnly 'org.projectlombok:lombok:1.18.32'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-    testCompile 'org.mockito:mockito-junit-jupiter:3.3.3'
-    testCompile 'org.junit.jupiter:junit-jupiter:5.4.2'
-
-}
 
 test { ///Please do not change this
     useJUnitPlatform()
@@ -71,4 +54,18 @@ test { ///Please do not change this
                     "${result.failedTestCount} failures, " +
                     "${result.skippedTestCount} skipped)")
     }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+    testCompile 'org.mockito:mockito-junit-jupiter:3.3.3'
+    testCompile 'org.junit.jupiter:junit-jupiter:5.4.2'
+
 }
