@@ -28,19 +28,18 @@ public class RenewalService implements IRenewalService {
     @Override
     public void printRenewalDetails() {
         UserSubscription userSubscription = userSubscriptionRepository.getUserSubscription();
-        if (userSubscription == null || userSubscription.hasSubscription()) {
+        if (userSubscription == null || !userSubscription.hasSubscription()) {
             throw new SubscriptionNotFoundException("SUBSCRIPTIONS_NOT_FOUND");
         }
         Map<Category, SubscriptionPlan> subscriptions = userSubscription.getSubscriptions();
         int total = 0;
-        List<Category> sortedCategories = new ArrayList<>(subscriptions.keySet());
-        sortedCategories.sort(Comparator.comparing(Enum::name));
 
-        for (Category category : sortedCategories) {
-            LocalDate reminderDate = calculateReminderDate(userSubscription.getStartDate(),
-                    subscriptions.get(category));
+        for (Category category : subscriptions.keySet()) {
+            SubscriptionPlan plan = subscriptions.get(category);
+            LocalDate reminderDate = calculateReminderDate(userSubscription.getStartDate(), plan);
+
             System.out.println("RENEWAL_REMINDER " + category + " " + reminderDate.format(formatter));
-            total += subscriptions.get(category).getCost();
+            total += plan.getCost();
         }
 
         if (userSubscription.getTopup() != null) {

@@ -36,7 +36,7 @@ public class UserSubscription {
     }
 
     public boolean hasSubscription() {
-        return subscriptions.isEmpty();
+        return !subscriptions.isEmpty();
     }
 
 }

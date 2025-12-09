@@ -22,8 +22,12 @@ public class Main {
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 List<String> tokens = parse(line);
-                ICommand command = commandInvoker.get(tokens.get(0));
-                command.execute(tokens);
+                try {
+                    ICommand command = commandInvoker.get(tokens.get(0));
+                    command.execute(tokens);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
             sc.close(); // closes the scanner
         } catch (IOException e) {
