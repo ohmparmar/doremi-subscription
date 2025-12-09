@@ -1,4 +1,4 @@
-package com.example.geektrust.service;
+package com.example.geektrust;
 
 import com.example.geektrust.entities.TopUp;
 import com.example.geektrust.entities.UserSubscription;
