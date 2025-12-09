@@ -21,9 +21,7 @@ public class UserSubscription {
     }
 
     public void addSubscription(SubscriptionPlan plan) {
-        if (subscriptions.containsKey(plan.getCategory())) {
-            throw new AddSubscriptionFailed("ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY");
-        }
+        if (subscriptions.containsKey(plan.getCategory())) throw new AddSubscriptionFailed("DUPLICATE_CATEGORY");
         subscriptions.put(plan.getCategory(), plan);
     }
 

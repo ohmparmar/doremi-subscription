@@ -24,9 +24,7 @@ public class AddSubscriptionCommand implements ICommand {
             subscriptionService.addSubscription(category, plan);
         } catch (IllegalArgumentException ex) {
             throw new InvalidSubscriptionCategoryException("INVALID_CATEGORY: " + tokens.get(1));
-        } catch (AddSubscriptionFailed ex) {
-            throw new AddSubscriptionFailed(ex.getMessage());
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

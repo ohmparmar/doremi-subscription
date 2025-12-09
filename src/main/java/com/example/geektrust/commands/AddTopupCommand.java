@@ -20,7 +20,7 @@ public class AddTopupCommand implements ICommand {
             TopUpType topupType = TopUpType.valueOf(tokens.get(1));
             int months = Integer.parseInt(tokens.get(2));
             topUpService.addTopUp(topupType, months);
-        } catch (InvalidDateException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("INVALID_TOPUP_TYPE");
         } catch (Exception e) {
             System.out.println(e.getMessage());
