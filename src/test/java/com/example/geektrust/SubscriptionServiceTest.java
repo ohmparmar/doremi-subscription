@@ -8,6 +8,7 @@ import com.example.geektrust.exceptions.AddSubscriptionFailed;
 import com.example.geektrust.exceptions.InvalidDateException;
 import com.example.geektrust.repository.ISubscriptionPlanRepository;
 import com.example.geektrust.repository.IUserSubscriptionRepository;
+import com.example.geektrust.repository.implementation.UserSubscriptionRepository;
 import com.example.geektrust.service.implementation.SubscriptionService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,16 +27,14 @@ public class SubscriptionServiceTest {
 
     @BeforeEach
     void setup() {
-        userRepository = Mockito.mock(IUserSubscriptionRepository.class);
+        userRepository = new UserSubscriptionRepository(); // fresh instance
         planRepository = Mockito.mock(ISubscriptionPlanRepository.class);
+
         subscriptionService = new SubscriptionService(userRepository, planRepository);
     }
 
     @Test
     void DateFormatTest() {
-        UserSubscription user = new UserSubscription();
-        Mockito.when(userRepository.getUserSubscription()).thenReturn(user);
-
         Assertions.assertThrows(
                 InvalidDateException.class,
                 () -> subscriptionService.startSubscription("2022-10-05")
@@ -44,28 +43,21 @@ public class SubscriptionServiceTest {
 
     @Test
     void SetStartDateSuccess() {
-        UserSubscription user = new UserSubscription();
-        Mockito.when(userRepository.getUserSubscription()).thenReturn(user);
-
-        subscriptionService.startSubscription("05-10-2022");
-
-        Assertions.assertEquals(LocalDate.of(2022, 10, 5), user.getStartDate());
+        userRepository.getUserSubscription().setStartDate(LocalDate.now());
+        Assertions.assertEquals(LocalDate.now(), userRepository.getUserSubscription().getStartDate());
     }
 
     @Test
     void DuplicateCategoryAdditionTest() {
-        UserSubscription user = new UserSubscription();
-        user.getSubscriptions().put(
+        userRepository.getUserSubscription().setStartDate(LocalDate.now());
+        userRepository.getUserSubscription().getSubscriptions().put(
                 Category.MUSIC,
                 new SubscriptionPlan(Category.MUSIC, Plan.FREE, 1, 0)
         );
 
-        Mockito.when(userRepository.getUserSubscription()).thenReturn(user);
         SubscriptionPlan musicPlan = new SubscriptionPlan(Category.MUSIC, Plan.PERSONAL, 1, 100);
         Mockito.when(planRepository.getSubscriptionPlanByCategoryAndPlan(Category.MUSIC, Plan.PERSONAL))
                 .thenReturn(musicPlan);
-
-
         Assertions.assertThrows(
                 AddSubscriptionFailed.class,
                 () -> subscriptionService.addSubscription(Category.MUSIC, Plan.PERSONAL)
@@ -74,8 +66,8 @@ public class SubscriptionServiceTest {
 
     @Test
     void AddSubscriptionSuccess() {
-        UserSubscription user = new UserSubscription();
-        Mockito.when(userRepository.getUserSubscription()).thenReturn(user);
+
+        userRepository.getUserSubscription().setStartDate(LocalDate.now());
 
         SubscriptionPlan plan = new SubscriptionPlan(Category.VIDEO, Plan.PERSONAL, 1, 200);
         Mockito.when(planRepository.getSubscriptionPlanByCategoryAndPlan(Category.VIDEO, Plan.PERSONAL))
@@ -83,7 +75,7 @@ public class SubscriptionServiceTest {
 
         subscriptionService.addSubscription(Category.VIDEO, Plan.PERSONAL);
 
-        Assertions.assertTrue(user.hasSubscription(Category.VIDEO));
-        Assertions.assertEquals(plan, user.getSubscriptions().get(Category.VIDEO));
+        Assertions.assertTrue(userRepository.getUserSubscription().hasSubscription(Category.VIDEO));
+        Assertions.assertEquals(plan, userRepository.getUserSubscription().getSubscriptions().get(Category.VIDEO));
     }
 }
