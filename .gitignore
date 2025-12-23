@@ -1,18 +1,26 @@
-
+# ===============================
+# Gradle
+# ===============================
 .gradle/
 build/
 out/
+
+# --- Gradle Wrapper (MUST be committed for Geektrust) ---
+!gradle/
+!gradle/wrapper/
 !gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# Temporary gradle files
+gradle/wrapper/gradle-wrapper.jar.tmp
 gradle-app.setting
 gradle.properties
-gradlew
-gradlew.bat
 
-# Gradle Wrapper logs
-gradle/wrapper/gradle-wrapper.properties
-gradle/wrapper/gradle-wrapper.jar.tmp
-
-# === IntelliJ IDEA ===
+# ===============================
+# IntelliJ IDEA
+# ===============================
 .idea/
 *.iml
 *.ipr
@@ -21,19 +29,27 @@ gradle/wrapper/gradle-wrapper.jar.tmp
 # IntelliJ build dirs
 /out/
 
-# === Eclipse ===
+# ===============================
+# Eclipse
+# ===============================
 .project
 .classpath
 .settings/
 bin/
 
-# === VS Code ===
+# ===============================
+# VS Code
+# ===============================
 .vscode/
 
-# === Logs ===
+# ===============================
+# Logs
+# ===============================
 *.log
 
-# === Operating System Files ===
+# ===============================
+# Operating System Files
+# ===============================
 # macOS
 .DS_Store
 .AppleDouble
@@ -47,30 +63,41 @@ Desktop.ini
 # Linux
 *~
 
-# === Java ===
+# ===============================
+# Java
+# ===============================
 *.class
 *.jar
 *.war
 *.ear
 *.javadoc
 
-# === Temporary files ===
+# ===============================
+# Temporary files
+# ===============================
 *.tmp
 *.swp
 *.swo
 
-# === Geektrust Input/Output Files ===
-# (Optional: uncomment if you don’t want to commit sample inputs)
+# ===============================
+# Geektrust Input/Output Files
+# ===============================
 # input.txt
 # output.txt
 
-# === Configuration ===
+# ===============================
+# Configuration
+# ===============================
 .env
 *.config
 
-# === Test Reports ===
+# ===============================
+# Test Reports
+# ===============================
 /test-results/
 /reports/
 
-# === Other Tools ===
+# ===============================
+# Coverage
+# ===============================
 /coverage/
