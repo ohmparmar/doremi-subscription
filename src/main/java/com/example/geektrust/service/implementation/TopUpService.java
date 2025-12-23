@@ -22,6 +22,7 @@ public class TopUpService implements ITopUpService {
 
     @Override
     public void addTopUp(TopUpType topupType, int months) {
+        if(months<=0) throw new AddTopUpFailedException("INVALID_TOPUP");
         UserSubscription userSubscription = userSubscriptionRepository.getUserSubscription();
         if(SubscriptionService.isStartDateNull(userSubscription)) throw new AddTopUpFailedException("INVALID_DATE");
         if (userSubscription == null || !userSubscription.hasSubscription()) throw new AddTopUpFailedException("SUBSCRIPTIONS_NOT_FOUND");

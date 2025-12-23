@@ -75,4 +75,49 @@ public class TopUpServiceTest {
         Assertions.assertEquals(150, userSubscription.getTopup().getCost());
         Assertions.assertEquals(3, userSubscription.getTopup().getMonths());
     }
+    @Test
+    void AddTopUpWithZeroMonths() {
+        UserSubscription userSubscription = userSubscriptionRepository.getUserSubscription();
+        userSubscription.setStartDate(LocalDate.now());
+        userSubscription.getSubscriptions().put(
+                Category.MUSIC,
+                new SubscriptionPlan(Category.MUSIC, Plan.FREE,
+                        Constants.MUSIC_FREE_PLAN_DURATION,
+                        Constants.MUSIC_FREE_PLAN_PRICE)
+        );
+
+        Mockito.when(topUpRepository.getTopUp(TopUpType.FOUR_DEVICE))
+                .thenReturn(new TopUp(TopUpType.FOUR_DEVICE, 50, 1));
+
+        AddTopUpFailedException ex = Assertions.assertThrows(
+                AddTopUpFailedException.class,
+                () -> topUpService.addTopUp(TopUpType.FOUR_DEVICE, 0)
+        );
+
+        Assertions.assertEquals("ADD_TOPUP_FAILED INVALID_TOPUP", ex.getMessage());
+    }
+    @Test
+    void AddTopUpWithNegativeMonths() {
+        UserSubscription userSubscription = userSubscriptionRepository.getUserSubscription();
+        userSubscription.setStartDate(LocalDate.now());
+        userSubscription.getSubscriptions().put(
+                Category.VIDEO,
+                new SubscriptionPlan(Category.VIDEO, Plan.FREE,
+                        Constants.VIDEO_FREE_PLAN_DURATION,
+                        Constants.VIDEO_FREE_PLAN_PRICE)
+        );
+
+        Mockito.when(topUpRepository.getTopUp(TopUpType.FOUR_DEVICE))
+                .thenReturn(new TopUp(TopUpType.FOUR_DEVICE, 50, 1));
+
+        AddTopUpFailedException ex = Assertions.assertThrows(
+                AddTopUpFailedException.class,
+                () -> topUpService.addTopUp(TopUpType.FOUR_DEVICE, -2)
+        );
+
+        Assertions.assertEquals("ADD_TOPUP_FAILED INVALID_TOPUP", ex.getMessage());
+    }
+
+
+
 }

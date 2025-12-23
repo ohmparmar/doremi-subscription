@@ -78,4 +78,56 @@ public class SubscriptionServiceTest {
         Assertions.assertTrue(userRepository.getUserSubscription().hasSubscription(Category.VIDEO));
         Assertions.assertEquals(plan, userRepository.getUserSubscription().getSubscriptions().get(Category.VIDEO));
     }
+
+    @Test
+    void TryAddSubscriptionWhenStartDateIsNull() {
+        Mockito.when(planRepository.getSubscriptionPlanByCategoryAndPlan(
+                        Category.VIDEO, Plan.PERSONAL))
+                .thenReturn(new SubscriptionPlan(Category.VIDEO, Plan.PERSONAL, 1, 200));
+
+        AddSubscriptionFailed exception = Assertions.assertThrows(
+                AddSubscriptionFailed.class,
+                () -> subscriptionService.addSubscription(Category.VIDEO, Plan.PERSONAL)
+        );
+
+        Assertions.assertEquals("ADD_SUBSCRIPTION_FAILED INVALID_DATE", exception.getMessage());
+    }
+    @Test
+    void AddSubscriptionWithMultipleCategories() {
+        userRepository.getUserSubscription().setStartDate(LocalDate.now());
+
+        SubscriptionPlan videoPlan =
+                new SubscriptionPlan(Category.VIDEO, Plan.PERSONAL, 1, 200);
+        SubscriptionPlan musicPlan =
+                new SubscriptionPlan(Category.MUSIC, Plan.PREMIUM, 1, 250);
+
+        Mockito.when(planRepository.getSubscriptionPlanByCategoryAndPlan(Category.VIDEO, Plan.PERSONAL))
+                .thenReturn(videoPlan);
+        Mockito.when(planRepository.getSubscriptionPlanByCategoryAndPlan(Category.MUSIC, Plan.PREMIUM))
+                .thenReturn(musicPlan);
+
+        subscriptionService.addSubscription(Category.VIDEO, Plan.PERSONAL);
+        subscriptionService.addSubscription(Category.MUSIC, Plan.PREMIUM);
+
+        Assertions.assertEquals(2,
+                userRepository.getUserSubscription().getSubscriptions().size());
+    }
+
+    @Test
+    void ReturnTrueWhenStartDateIsNull() {
+        UserSubscription subscription = new UserSubscription();
+        Assertions.assertTrue(SubscriptionService.isStartDateNull(subscription));
+    }
+    @Test
+    void ReturnFalseWhenStartDateExists() {
+        UserSubscription subscription = new UserSubscription();
+        subscription.setStartDate(LocalDate.now());
+
+        Assertions.assertFalse(SubscriptionService.isStartDateNull(subscription));
+    }
+
+
+
+
+
 }
